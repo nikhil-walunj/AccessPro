@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block "title" %}
+
+{% endblock "title" %}
+
+{% block "main" %}
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #000;
+        font-family: 'Poppins', sans-serif;
+       
+    }
+
+    .container1 {
+        max-width: 420px;
+        background-color: #1c1c1c;
+        width: 90%;
+        padding: 30px 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        margin: auto;
+        margin-top: 5%;
+    }
+
+    label {
+        display: block;
+        text-align: left;
+        margin-bottom: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        color: white;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 12px;
+        font-size: 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        outline: none;
+        background-color: #2a2a2a;
+        color: white;
+        transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+        border-color: #00ffff;
+    }
+
+    button[type="submit"] {
+        background-color: #00ffff;
+        color: black;
+        border: none;
+        border-radius: 8px;
+        padding: 12px;
+        font-size: 16px;
+        width: 100%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #00cccc;
+    }
+
+    p[style="color:red;"] {
+        color: red;
+        font-size: 14px;
+        margin-top: 12px;
+        font-weight: 500;
+    }
+
+    @media (max-width: 480px) {
+        .container1 {
+            padding: 20px 15px;
+        }
+
+        label {
+            font-size: 15px;
+        }
+
+        input[type="text"],
+        button[type="submit"] {
+            font-size: 15px;
+            padding: 10px;
+        }
+    }
+</style>
+ 
+<div class="container1">
+    <form method="POST">
+        {% csrf_token %}
+        <label>Enter OTP:</label>
+        <input type="text" name="otp" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if messages %}
+        {% for message in messages %}
+        <p style="color:red;">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock "main" %}
+

@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block "main" %}
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #000;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .dashboard-container {
+        
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: white;
+        text-align: center;
+        padding: 40px 20px;
+    }
+
+    h2 {
+        font-size: 28px;
+        margin-bottom: 15px;
+    }
+
+    p {
+        font-size: 18px;
+        color: #ccc;
+    }
+
+    table th,
+    table td {
+        border: 1px solid #444;
+        padding: 10px;
+        text-align: center;
+    }
+
+    @media (max-width: 480px) {
+        h2 {
+            font-size: 22px;
+        }
+
+        p {
+            font-size: 16px;
+        }
+    }
+</style>
+
+<div class="dashboard-container">
+    <h2>Welcome, {{ user.full_name }}</h2>
+    <p>You are logged in as: <strong>{{ user.role }}</strong></p>
+</div>
+{% if user.role == 'Admin' %}
+<div style="padding: 40px;">
+  <h2 style="color: #00ffff;">Registered Users</h2>
+  <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; color: #fff; background-color: #1c1c1c; border-collapse: collapse;">
+    <thead>
+      <tr style="background-color: #00ffff; color: #000;">
+        <th>No</th>
+        <th>Email</th>
+        <th>Full Name</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th>Registered On</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.full_name }}</td>
+        <td>{{ user.role }}</td>
+        <td>{{ user.status }}</td>
+        <td>{{ user.created_at }}</td>
+         <td>
+            <a href="{% url 'edituser' user.id %}" style="color: #00ffff; margin-right: 10px;">Edit</a>
+            <a href="{% url 'deleteuser' user.id %}" style="color: red;" onclick="return confirm('Are you sure you want to delete this user?');">Delete</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5">No users found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+{% endblock "main" %}
